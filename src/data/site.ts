@@ -800,6 +800,109 @@ export const serviceCatalog: CatalogService[] = [
     ],
     outputs: ["Web GIS application", "Admin guide", "Source GIS pack"],
   },
+  {
+    id: "gis-analysis",
+    slug: "gis-analysis",
+    title: "GIS Analysis",
+    description:
+      "GIS analysis transforms geographic data into useful information for land management, environmental assessment, infrastructure planning and decision-making in Zimbabwe.",
+    price: 0,
+    image: img("gis-analysis"),
+    category: "Data & Mapping",
+    caption:
+      "Analyse geographic relationships to understand patterns, locations and spatial change.",
+    features: [
+      "Spatial queries and geographic data analysis",
+      "Proximity, overlay and site analysis",
+      "Land, infrastructure and environmental analysis",
+      "Multi-layer GIS analysis",
+      "Spatial pattern and relationship analysis",
+    ],
+    outputs: [
+      "Analytical GIS maps",
+      "Spatial analysis results",
+      "Decision-support datasets",
+      "Reports and interpreted findings",
+    ],
+  },
+
+  {
+    id: "remote-sensing",
+    slug: "remote-sensing",
+    title: "Remote Sensing",
+    description:
+      "Remote sensing services use satellite imagery and Earth observation data to monitor land, vegetation, water resources and environmental change across Zimbabwe and Southern Africa.",
+    price: 0,
+    image: img("change-detection-gee"),
+    category: "Remote Sensing",
+    caption:
+      "Use satellite imagery to observe, measure and understand changes across the landscape.",
+    features: [
+      "Satellite image processing",
+      "Multi-temporal change detection",
+      "Vegetation and environmental monitoring",
+      "Earth observation analysis",
+      "Google Earth Engine workflows",
+    ],
+    outputs: [
+      "Satellite-derived maps",
+      "Change detection results",
+      "Environmental monitoring datasets",
+      "Remote sensing reports",
+    ],
+  },
+
+  {
+    id: "cartography",
+    slug: "cartography",
+    title: "Cartography",
+    description:
+      "Professional cartography and map design for technical reports, planning, environmental assessments, research, presentations and decision-making.",
+    price: 0,
+    image: img("zimbabwe-cartography"),
+    category: "Data & Mapping",
+    caption:
+      "Turn geographic information into clear, accurate and purposeful maps.",
+    features: [
+      "Professional thematic map design",
+      "Reference and location maps",
+      "Environmental and land-use maps",
+      "Map layouts for reports and publications",
+      "Print and digital cartographic outputs",
+    ],
+    outputs: [
+      "High-resolution maps",
+      "Publication-ready cartographic layouts",
+      "Digital map outputs",
+      "Map packages for reports and presentations",
+    ],
+  },
+
+  {
+    id: "spatial-modelling",
+    slug: "spatial-modelling",
+    title: "Spatial Analysis & Modelling",
+    description:
+      "Spatial analysis and modelling combines geographic data, environmental variables and analytical methods to evaluate locations, identify patterns and support evidence-based decisions.",
+    price: 0,
+    image: img("land-suitability-mca"),
+    category: "Terrain & Modelling",
+    caption:
+      "Model relationships between location, terrain, environment and human activity.",
+    features: [
+      "Multi-criteria spatial analysis",
+      "Land suitability modelling",
+      "Terrain and accessibility analysis",
+      "Environmental spatial modelling",
+      "Site selection and location analysis",
+    ],
+    outputs: [
+      "Spatial suitability maps",
+      "Analytical models",
+      "Site-selection results",
+      "Decision-support maps and datasets",
+    ],
+  },
 ];
 
 export const services = [
@@ -807,57 +910,70 @@ export const services = [
     n: "01",
     id: "gis-analysis",
     title: "GIS Analysis",
-    slug: "spatial-database-setup",
+    slug: "gis-analysis",
     image: img("gis-analysis"),
-    deck: "Turn spatial data into answers about land, water, infrastructure and the environment.",
+    deck:
+      "Turn spatial data into answers about land, water, infrastructure and the environment.",
   },
+
   {
     n: "02",
     id: "gis-mapping",
     title: "GIS Mapping",
-    slug: "custom-map-design",
+    slug: "cartography",
     image: img("zimbabwe-cartography"),
-    deck: "Create maps that help people explore, understand and monitor geographic information.",
+    deck:
+      "Create maps that help people explore, understand and communicate geographic information.",
   },
+
   {
     n: "03",
     id: "remote-sensing",
     title: "Remote Sensing",
-    slug: "multi-temporal-change-detection",
+    slug: "remote-sensing",
     image: img("change-detection-gee"),
-    deck: "Use satellite imagery to understand how landscapes change across seasons, years and decades.",
+    deck:
+      "Use satellite imagery to understand how landscapes change across seasons, years and decades.",
   },
+
   {
     n: "04",
     id: "land-use-land-cover-mapping",
     title: "Land Use & Land Cover",
     slug: "land-cover-classification",
     image: img("land-cover-lulc"),
-    deck: "Map what is covering the land and how those land-cover patterns are changing.",
+    deck:
+      "Map what is covering the land and how those land-cover patterns are changing.",
   },
+
   {
     n: "05",
     id: "environmental-gis",
     title: "Environmental GIS",
     slug: "environmental-spatial-assessment",
     image: img("environmental-gwaai"),
-    deck: "Build spatial evidence for environmental monitoring, assessment and planning.",
+    deck:
+      "Build spatial evidence for environmental monitoring, assessment and planning.",
   },
+
   {
     n: "06",
     id: "cartography",
     title: "Cartography",
-    slug: "custom-map-design",
+    slug: "cartography",
     image: img("zimbabwe-cartography"),
-    deck: "Design maps around the person who needs to read them and the decision they need to make.",
+    deck:
+      "Design maps around the people who need to read them and the decisions they need to make.",
   },
+
   {
     n: "07",
     id: "spatial-analysis-modelling",
     title: "Spatial Analysis & Modelling",
-    slug: "land-suitability-mapping",
+    slug: "spatial-modelling",
     image: img("land-suitability-mca"),
-    deck: "Model relationships between location, terrain, environment and human activity.",
+    deck:
+      "Model relationships between location, terrain, environment and human activity.",
   },
 ];
 

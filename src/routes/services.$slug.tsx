@@ -224,6 +224,7 @@ export const Route = createFileRoute("/services/$slug")({
 
 function ServiceDetailsPage() {
   const { slug } = Route.useParams();
+  console.log("TESTING - slug is:", slug);
   const service = getService(slug);
 
   if (!service) {
@@ -716,6 +717,8 @@ function ServiceDetailsPage() {
     </div>
   );
 }
+
+
 
 function ServiceNotFound() {
   return (
