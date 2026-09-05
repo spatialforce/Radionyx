@@ -1,4 +1,4 @@
-
+```html
 <!doctype html>
 <html lang="en">
   <head>
@@ -20,13 +20,19 @@
     />
 
     <meta
-      name="keywords"
-      content="GIS Zimbabwe, GIS services Zimbabwe, remote sensing Zimbabwe, geospatial services Zimbabwe, spatial analysis Zimbabwe, GIS mapping, satellite imagery Zimbabwe, land use mapping, environmental mapping, geospatial data"
+      name="author"
+      content="Radionyx Geospatial Solutions"
     />
 
-    <meta name="author" content="Radionyx Geospatial Solutions" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="googlebot" content="index, follow, max-image-preview:large" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large"
+    />
+
+    <meta
+      name="googlebot"
+      content="index, follow, max-image-preview:large"
+    />
 
     <link
       rel="canonical"
@@ -34,9 +40,20 @@
     />
 
     <!-- Geographic / language signals -->
-    <meta name="language" content="English" />
-    <meta name="geo.region" content="ZW" />
-    <meta name="geo.placename" content="Zimbabwe" />
+    <meta
+      name="language"
+      content="English"
+    />
+
+    <meta
+      name="geo.region"
+      content="ZW"
+    />
+
+    <meta
+      name="geo.placename"
+      content="Zimbabwe"
+    />
 
     <!-- Favicon -->
     <link
@@ -82,6 +99,7 @@
       content="en_ZW"
     />
 
+    <!-- Social sharing image -->
     <meta
       property="og:image"
       content="https://www.radionyx.co.zw/og-image.jpg"
@@ -126,8 +144,198 @@
 
     <meta
       name="color-scheme"
-      content="light"
+      content="dark"
     />
+
+    <!--
+      Initial loading screen.
+      This appears immediately while React loads,
+      preventing a blank white screen.
+    -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #1a1a18;
+      }
+
+      #root {
+        min-height: 100vh;
+      }
+
+      #initial-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: #1a1a18;
+        color: #f1f1ec;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      /* Subtle diagonal hatch pattern */
+      #initial-loader::before {
+        content: "";
+        position: absolute;
+        inset: -50%;
+        background:
+          repeating-linear-gradient(
+            135deg,
+            transparent 0,
+            transparent 30px,
+            rgba(241, 241, 236, 0.035) 30px,
+            rgba(241, 241, 236, 0.035) 31px
+          );
+        transform: rotate(-3deg);
+        pointer-events: none;
+      }
+
+      /* Subtle dot field */
+      #initial-loader::after {
+        content: "";
+        position: absolute;
+        right: -80px;
+        bottom: -100px;
+        width: 360px;
+        height: 360px;
+        opacity: 0.18;
+        background-image:
+          radial-gradient(
+            rgba(241, 241, 236, 0.55) 1px,
+            transparent 1px
+          );
+        background-size: 12px 12px;
+        mask-image:
+          linear-gradient(
+            135deg,
+            transparent 10%,
+            black 70%
+          );
+        -webkit-mask-image:
+          linear-gradient(
+            135deg,
+            transparent 10%,
+            black 70%
+          );
+        pointer-events: none;
+      }
+
+      .loader-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        animation: loaderFadeIn 0.45s ease-out both;
+      }
+
+      .loader-mark {
+        position: relative;
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        overflow: hidden;
+        border: 1px solid rgba(241, 241, 236, 0.35);
+      }
+
+      .loader-mark::before,
+      .loader-mark::after {
+        content: "";
+        position: absolute;
+        background: #2dbb6f;
+      }
+
+      .loader-mark::before {
+        left: 7px;
+        top: -8px;
+        width: 7px;
+        height: 50px;
+        transform: rotate(38deg);
+      }
+
+      .loader-mark::after {
+        right: 7px;
+        top: -8px;
+        width: 2px;
+        height: 50px;
+        transform: rotate(38deg);
+        opacity: 0.55;
+      }
+
+      .loader-name {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+      }
+
+      .loader-line {
+        position: absolute;
+        left: 50%;
+        bottom: 30px;
+        width: 70px;
+        height: 1px;
+        overflow: hidden;
+        background: rgba(241, 241, 236, 0.12);
+        transform: translateX(-50%);
+      }
+
+      .loader-line::after {
+        content: "";
+        position: absolute;
+        left: -35px;
+        top: 0;
+        width: 35px;
+        height: 1px;
+        background: #2dbb6f;
+        animation: loaderLine 0.9s ease-in-out infinite;
+      }
+
+      @keyframes loaderFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes loaderLine {
+        0% {
+          left: -35px;
+        }
+
+        100% {
+          left: 70px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .loader-content {
+          animation: none;
+        }
+
+        .loader-line::after {
+          animation: none;
+          left: 0;
+          width: 35px;
+        }
+      }
+    </style>
 
     <!-- Structured data -->
     <script type="application/ld+json">
@@ -144,8 +352,14 @@
               "url": "https://www.radionyx.co.zw/logo.png"
             },
             "description": "Geospatial company providing GIS, remote sensing, mapping, spatial analysis and geospatial data solutions in Zimbabwe and Southern Africa.",
-            "email": "hello@radionyx.co.zw",
-            "telephone": "+263772000000",
+            "email": "info@radionyx.co.zw",
+            "telephone": "+263717428085",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "17 Longhurst Road, Northlyne",
+              "addressLocality": "Bulawayo",
+              "addressCountry": "ZW"
+            },
             "areaServed": [
               {
                 "@type": "Country",
@@ -184,7 +398,31 @@
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+
+      <!-- Initial loading screen -->
+      <div
+        id="initial-loader"
+        aria-label="Loading Radionyx"
+      >
+        <div class="loader-content">
+          <div
+            class="loader-mark"
+            aria-hidden="true"
+          ></div>
+
+          <p class="loader-name">
+            RADIONYX
+          </p>
+        </div>
+
+        <div
+          class="loader-line"
+          aria-hidden="true"
+        ></div>
+      </div>
+
+    </div>
 
     <script
       type="module"
