@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" role="img" aria-label="Radionyx">
+  <rect width="16" height="16" rx="3" fill="#1A1A18"/>
+  <path d="M3 2.75v10.5" stroke="#2DBB6F" stroke-width="1.15" stroke-linecap="round"/>
+  <circle cx="3" cy="8" r="1.05" fill="#2DBB6F"/>
+  <path fill="#F1F1EC" d="M5.15 3.05h4.15c1.85 0 3.05 1.12 3.05 2.72 0 1.18-.7 2.12-1.88 2.42L12.35 13h-1.92L8.68 8.95H7.15V13H5.15V3.05zm2 4.15h2.52c.82 0 1.32-.48 1.32-1.22s-.5-1.28-1.32-1.28H7.15v2.5z"/>
+</svg>

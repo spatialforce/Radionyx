@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #1a1a18;
+  --color-paper: #f1f1ec;
+  --color-paper-2: #f9f9f6;
+  --color-accent: #2dbb6f;
+  --color-accent-dark: #239a5a;
+  --color-muted: #6e6e66;
+  --color-cream: #ecece4;
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  details > summary {
+    list-style: none;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-image,
+  .shooting-star,
+  .hero-slide-in,
+  .hero-scroll-cue,
+  .ticker-content {
+    animation: none !important;
+  }
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 32s linear infinite;
+}
+
+@keyframes shoot {
+  0% {
+    opacity: 0;
+    transform: translate3d(-30px, 30px, 0) rotate(-28deg);
+  }
+  8% {
+    opacity: 0.45;
+  }
+  18% {
+    opacity: 0;
+    transform: translate3d(75px, -75px, 0) rotate(-28deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(75px, -75px, 0) rotate(-28deg);
+  }
+}
+
+.shooting-star {
+  opacity: 0;
+  transform-origin: right center;
+  animation: shoot 14s ease-out infinite;
+}
+
+@keyframes heroZoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.hero-image {
+  position: absolute;
+  inset: -6%;
+  width: 112%;
+  height: 112%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.05) brightness(0.58);
+  opacity: 0.72;
+  animation: heroZoom 18s ease-in-out infinite;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-in {
+  animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
