@@ -118,6 +118,21 @@ export function Footer() {
                 <span>{contactInfo.phone}</span>
               </a>
 
+              <a
+            href="https://wa.me/263717428085"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat with Radionyx on WhatsApp"
+            className="flex items-center gap-3 text-sm text-paper/70 transition-colors hover:text-accent"
+          >
+            <img
+              src="/icons/whatsapp.png"
+              alt="WhatsApp"
+              className="h-5 w-5 object-contain"
+            />
+            <span>WhatsApp</span>
+          </a>
+
               {/* Address */}
               <div className="flex items-start gap-3">
                 <img

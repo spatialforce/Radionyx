@@ -47,23 +47,17 @@ export function SiteHeader() {
   useEffect(() => {
     const onScroll = () => {
       const top = window.scrollY;
-      const h =
-        document.documentElement.scrollHeight - window.innerHeight;
+      const h = document.documentElement.scrollHeight - window.innerHeight;
 
       setScrolled(top > 30);
-      setProgress(
-        h > 0 ? Math.min(100, (top / h) * 100) : 0
-      );
+      setProgress(h > 0 ? Math.min(100, (top / h) * 100) : 0);
     };
 
-    window.addEventListener("scroll", onScroll, {
-      passive: true,
-    });
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     onScroll();
 
-    return () =>
-      window.removeEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
 
   useEffect(() => {
@@ -76,9 +70,7 @@ export function SiteHeader() {
       ? pathname === "/"
       : pathname === href || pathname.startsWith(`${href}/`);
 
-  const navLinks = mainNavLinks.filter(
-    ({ href }) => href !== "/"
-  );
+  const navLinks = mainNavLinks.filter(({ href }) => href !== "/");
 
   return (
     <>
@@ -141,10 +133,7 @@ export function SiteHeader() {
         <div className="relative flex items-center justify-between gap-4 px-4 py-2.5 lg:gap-6 lg:px-5 lg:py-4">
 
           {/* LOGO */}
-          <Link
-            to="/"
-            className="flex shrink-0 items-center"
-          >
+          <Link to="/" className="flex shrink-0 items-center">
             <img
               src="/logo.png"
               alt="Radionyx Geospatial Solutions"
@@ -154,7 +143,6 @@ export function SiteHeader() {
 
           {/* DESKTOP NAVIGATION */}
           <nav className="hidden flex-1 items-center justify-center gap-8 lg:flex">
-            {/* HOME */}
             <Link
               to="/"
               className={`whitespace-nowrap text-sm font-medium transition-colors ${
@@ -166,7 +154,6 @@ export function SiteHeader() {
               Home
             </Link>
 
-            {/* OTHER NAV LINKS */}
             {navLinks.map(({ label, href }) => (
               <Link
                 key={href}
@@ -183,7 +170,7 @@ export function SiteHeader() {
           </nav>
 
           {/* SCROLL PROGRESS */}
-          <div className="absolute right-0 bottom-0 left-0 h-[3px] bg-ink/10">
+          <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-ink/10">
             <div
               className="h-full bg-accent transition-[width] duration-100"
               style={{ width: `${progress}%` }}
@@ -193,7 +180,7 @@ export function SiteHeader() {
           {/* DESKTOP ACTIONS */}
           <div className="hidden items-center gap-3 lg:flex">
 
-            {/* SOCIAL ICONS */}
+            {/* SOCIAL LINKS */}
             <div className="flex items-center gap-2">
               {socialLinks.map(({ href, label }) => {
                 const finalHref =
@@ -225,7 +212,7 @@ export function SiteHeader() {
                 <ShoppingCart size={16} />
 
                 {count > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-paper">
+                  <span className="absolute -right-1.5 -top-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-paper">
                     {count}
                   </span>
                 )}
@@ -264,7 +251,7 @@ export function SiteHeader() {
               <ShoppingCart size={20} />
 
               {count > 0 && (
-                <span className="absolute top-1 right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[9px] font-bold text-paper">
+                <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[9px] font-bold text-paper">
                   {count}
                 </span>
               )}
@@ -275,15 +262,9 @@ export function SiteHeader() {
               type="button"
               onClick={() => setMenuOpen((o) => !o)}
               className="flex h-11 w-11 items-center justify-center"
-              aria-label={
-                menuOpen ? "Close menu" : "Open menu"
-              }
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
             >
-              {menuOpen ? (
-                <X size={22} />
-              ) : (
-                <Menu size={22} />
-              )}
+              {menuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -304,35 +285,27 @@ export function SiteHeader() {
         {/* MOBILE NAVIGATION */}
         {menuOpen && (
           <nav className="flex flex-col gap-1 border-t border-ink/10 px-5 py-4 lg:hidden">
-
-            {/* HOME */}
             <Link
               to="/"
               className={`rounded-md px-2 py-3 text-base font-medium ${
-                isActive("/")
-                  ? "text-accent"
-                  : "text-ink"
+                isActive("/") ? "text-accent" : "text-ink"
               }`}
             >
               Home
             </Link>
 
-            {/* OTHER NAV LINKS */}
             {navLinks.map(({ label, href }) => (
               <Link
                 key={href}
                 to={href}
                 className={`rounded-md px-2 py-3 text-base font-medium ${
-                  isActive(href)
-                    ? "text-accent"
-                    : "text-ink"
+                  isActive(href) ? "text-accent" : "text-ink"
                 }`}
               >
                 {label}
               </Link>
             ))}
 
-            {/* START A PROJECT */}
             <Link
               to="/contact"
               hash="project"
@@ -343,6 +316,25 @@ export function SiteHeader() {
           </nav>
         )}
       </header>
+
+      {/* FLOATING WHATSAPP — DESKTOP ONLY */}
+      <a
+        href="https://wa.me/263717428085"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat with Radionyx on WhatsApp"
+        className="group fixed bottom-6 right-6 z-[100] hidden h-11 w-11 items-center justify-center transition-all duration-300 hover:scale-110 lg:flex"
+      >
+        <img
+          src="/icons/whatsapp.png"
+          alt="WhatsApp"
+          className="h-11 w-11 object-contain drop-shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
+        />
+
+        <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full bg-ink px-3 py-2 text-xs font-medium text-paper opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100">
+          Chat with us
+        </span>
+      </a>
     </>
   );
 }
@@ -370,15 +362,13 @@ function CartPanel({
       className={
         mobile
           ? "bg-paper px-4 py-4"
-          : "absolute top-12 right-0 z-50 w-80 overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-xl"
+          : "absolute right-0 top-12 z-50 w-80 overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-xl"
       }
     >
-      {/* CART HEADER */}
       <p className="border-b border-ink/10 p-4 text-sm font-semibold text-ink">
         Enquiry cart {count > 0 && `(${count})`}
       </p>
 
-      {/* EMPTY CART */}
       {items.length === 0 ? (
         <p className="p-4 text-sm text-ink/60">
           No services added yet. Browse the{" "}
@@ -392,7 +382,6 @@ function CartPanel({
         </p>
       ) : (
         <>
-          {/* CART ITEMS */}
           <div className="max-h-64 divide-y divide-ink/10 overflow-y-auto">
             {items.map((item) => (
               <div
@@ -421,7 +410,6 @@ function CartPanel({
             ))}
           </div>
 
-          {/* CART TOTAL */}
           <div className="border-t border-ink/10 p-4">
             <div className="mb-3 flex items-center justify-between text-sm">
               <span className="font-medium text-ink">
