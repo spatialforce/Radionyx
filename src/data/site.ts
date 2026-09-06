@@ -609,7 +609,7 @@ export const serviceCatalog: CatalogService[] = [
     description:
       "Organise and analyse soil-related spatial information for agriculture, irrigation and land evaluation.",
     price: 500,
-    image: img("agriculture-soil"),
+    image: img("soil-analysis"),
     category: "Terrain & Modelling",
     caption: "Agricultural land-suitability map — soil, slope and land cover combined for cropping decisions.",
     features: [
@@ -807,7 +807,7 @@ export const serviceCatalog: CatalogService[] = [
     description:
       "GIS analysis transforms geographic data into useful information for land management, environmental assessment, infrastructure planning and decision-making in Zimbabwe.",
     price: 0,
-    image: img("gis-analysis"),
+    image: img("GIS-analysis"),
     category: "Data & Mapping",
     caption:
       "Analyse geographic relationships to understand patterns, locations and spatial change.",

@@ -163,10 +163,15 @@ export function Footer() {
                 return null;
               }
 
+              const finalHref =
+                label === "Facebook"
+                  ? "https://www.facebook.com/profile.php?id=61594012055853"
+                  : href;
+
               return (
                 <a
                   key={label}
-                  href={href}
+                  href={finalHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Radionyx on ${label}`}

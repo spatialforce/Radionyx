@@ -1,589 +1,885 @@
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  Check,
-  Clock3,
-  Mail,
-  MapPin,
-  Phone,
+  ArrowUpRight,
+  ChevronDown,
+  Plus,
 } from "lucide-react";
+import { MonoImage, Reveal } from "@/components/ui";
+import { contactInfo, faqs, process, projects, services } from "@/data/site";
 
-import { contactInfo } from "@/data/site";
+const SITE_URL = "https://www.radionyx.co.zw";
+
+/* ============================================================
+   SHOOTING STARS
+   ============================================================ */
+
+function ShootingStars() {
+  const [stars, setStars] = useState<
+    {
+      id: number;
+      left: number;
+      top: number;
+      delay: number;
+      duration: number;
+      size: number;
+      length: number;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    const generated = Array.from({ length: 6 }, (_, id) => ({
+      id,
+      left: 8 + Math.random() * 84,
+      top: 8 + Math.random() * 78,
+      delay: Math.random() * 12,
+      duration: 8 + Math.random() * 8,
+      size: 1 + Math.random() * 1.5,
+      length: 18 + Math.random() * 25,
+    }));
+
+    setStars(generated);
+  }, []);
+
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 z-[2] overflow-hidden"
+    >
+      {stars.map((star) => (
+        <span
+          key={star.id}
+          className="shooting-star absolute"
+          style={
+            {
+              left: `${star.left}%`,
+              top: `${star.top}%`,
+              width: `${star.length}px`,
+              height: `${star.size}px`,
+              animationDelay: `${star.delay}s`,
+              animationDuration: `${star.duration}s`,
+            } as React.CSSProperties
+          }
+        >
+          <span
+            className="absolute right-0 top-1/2 -translate-y-1/2 rounded-full"
+            style={{
+              width: `${star.size * 1.6}px`,
+              height: `${star.size * 1.6}px`,
+            }}
+          />
+        </span>
+      ))}
+    </div>
+  );
+}
+
+/* ============================================================
+   ROUTE
+   ============================================================ */
 
 export const Route = createFileRoute("/contact")({
-  component: ContactPage,
+  component: Home,
 
   head: () => ({
     meta: [
       {
-        title: "Contact Radionyx | GIS Company in Bulawayo, Zimbabwe",
+        title: "GIS Services in Zimbabwe | Radionyx Geospatial Solutions",
       },
       {
         name: "description",
         content:
-          "Contact Radionyx Geospatial Solutions in Bulawayo, Zimbabwe for GIS, remote sensing, mapping, spatial analysis, environmental monitoring and geospatial data solutions.",
+          "Radionyx Geospatial Solutions provides GIS services in Zimbabwe, including GIS mapping, remote sensing, spatial analysis, land use and land cover mapping, environmental GIS and geospatial data solutions.",
+      },
+      {
+        name: "keywords",
+        content:
+          "GIS services Zimbabwe, GIS in Zimbabwe, GIS company Zimbabwe, geospatial services Zimbabwe, GIS mapping Zimbabwe, remote sensing Zimbabwe, spatial analysis Zimbabwe, environmental GIS Zimbabwe, land use mapping Zimbabwe",
       },
       {
         name: "robots",
-        content: "index, follow",
+        content: "index, follow, max-image-preview:large",
+      },
+      {
+        name: "author",
+        content: "Radionyx Geospatial Solutions",
+      },
+      {
+        property: "og:title",
+        content: "GIS Services in Zimbabwe | Radionyx Geospatial Solutions",
+      },
+      {
+        property: "og:description",
+        content:
+          "GIS, remote sensing, mapping and spatial analysis services in Zimbabwe. Radionyx turns geographic data into practical information for planning, environmental management, agriculture, water and infrastructure.",
+      },
+      {
+        property: "og:type",
+        content: "website",
+      },
+      {
+        property: "og:url",
+        content: SITE_URL,
+      },
+      {
+        property: "og:site_name",
+        content: "Radionyx Geospatial Solutions",
+      },
+      {
+        property: "og:image",
+        content: `${SITE_URL}/images/hero-mapping.webp`,
+      },
+      {
+        property: "og:image:alt",
+        content:
+          "GIS and geospatial mapping imagery representing Zimbabwe",
+      },
+      {
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
+      {
+        name: "twitter:title",
+        content: "GIS Services in Zimbabwe | Radionyx Geospatial Solutions",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "GIS, remote sensing, mapping and spatial analysis services across Zimbabwe.",
+      },
+      {
+        name: "twitter:image",
+        content: `${SITE_URL}/images/hero-mapping.webp`,
+      },
+    ],
+
+    links: [
+      {
+        rel: "canonical",
+        href: SITE_URL,
+      },
+    ],
+
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": `${SITE_URL}/#organization`,
+              name: "Radionyx Geospatial Solutions",
+              url: SITE_URL,
+              logo: `${SITE_URL}/logo.png`,
+              email: contactInfo.email,
+              telephone: contactInfo.phone,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: contactInfo.address,
+                addressLocality: contactInfo.city,
+                addressRegion: contactInfo.region,
+                addressCountry: contactInfo.country,
+              },
+              areaServed: {
+                "@type": "Country",
+                name: "Zimbabwe",
+              },
+              description:
+                "Geospatial consultancy providing GIS, mapping, remote sensing, spatial analysis, environmental GIS and geospatial data solutions in Zimbabwe.",
+            },
+
+            {
+              "@type": "WebSite",
+              "@id": `${SITE_URL}/#website`,
+              url: SITE_URL,
+              name: "Radionyx Geospatial Solutions",
+              publisher: {
+                "@id": `${SITE_URL}/#organization`,
+              },
+              description:
+                "GIS services, remote sensing, mapping and spatial analysis in Zimbabwe.",
+            },
+
+            {
+              "@type": "WebPage",
+              "@id": `${SITE_URL}/#webpage`,
+              url: SITE_URL,
+              name: "GIS Services in Zimbabwe | Radionyx Geospatial Solutions",
+              isPartOf: {
+                "@id": `${SITE_URL}/#website`,
+              },
+              about: {
+                "@id": `${SITE_URL}/#organization`,
+              },
+              description:
+                "GIS services in Zimbabwe covering GIS mapping, remote sensing, spatial analysis, land use and land cover mapping, environmental GIS and geospatial data solutions.",
+            },
+
+            {
+              "@type": "FAQPage",
+              mainEntity: faqs.map((faq) => ({
+                "@type": "Question",
+                name: faq.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: faq.answer,
+                },
+              })),
+            },
+          ],
+        }),
       },
     ],
   }),
 });
 
-const latitude = -20.093652136698925;
-const longitude = 28.59643869482082;
+/* ============================================================
+   HOME
+   ============================================================ */
 
-const mapUrl =
-  "https://www.openstreetmap.org/?mlat=-20.093652136698925&mlon=28.59643869482082#map=18/-20.093652136698925/28.59643869482082";
-
-const mapEmbedUrl =
-  "https://www.openstreetmap.org/export/embed.html?bbox=28.58843869482082%2C-20.103652136698925%2C28.60443869482082%2C-20.083652136698925&layer=mapnik&marker=-20.093652136698925%2C28.59643869482082";
-
-const services = [
-  "GIS and spatial analysis",
-  "Remote sensing and satellite imagery",
-  "Mapping and cartography",
-  "Environmental and land analysis",
-  "Web GIS and spatial applications",
-];
-
-function ContactPage() {
-  const [submitted, setSubmitted] = useState(false);
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setSubmitted(true);
-  }
-
+function Home() {
   return (
-    <main className="bg-paper text-ink">
-      {/* HERO */}
-      <section className="relative isolate min-h-[620px] overflow-hidden bg-[#090909] text-paper">
-        {/* Base diagonal hatch field */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -top-20 h-[560px] w-[760px] -rotate-[18deg] opacity-[0.16]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(135deg, transparent 0, transparent 14px, rgba(255,255,255,0.22) 15px, transparent 16px)",
-          }}
-        />
+    <div className="w-full overflow-hidden bg-paper text-ink">
+      <style>{`
+        /* ---------------------------------------------
+           HERO IMAGE ZOOM
+           Smoothly zooms in, then back out forever.
+        --------------------------------------------- */
 
-        {/* Second hatch field */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-40 -left-20 h-[430px] w-[620px] rotate-[18deg] opacity-[0.10]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(135deg, transparent 0, transparent 19px, rgba(255,255,255,0.28) 20px, transparent 21px)",
-          }}
-        />
+        @keyframes radionyx-hero-zoom {
+          0% {
+            transform: scale(1);
+          }
 
-        {/* Fine grid */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.7) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.7) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-          }}
-        />
+          50% {
+            transform: scale(1.10);
+          }
 
-        {/* Topographic-style angular line */}
-        <svg
-          aria-hidden="true"
-          className="pointer-events-none absolute right-[5%] top-[8%] h-[320px] w-[520px] opacity-[0.14]"
-          viewBox="0 0 520 320"
-          fill="none"
-        >
-          <path
-            d="M40 230C90 160 130 210 175 145C215 87 270 105 310 58C350 12 414 62 480 22"
-            stroke="currentColor"
-            strokeWidth="1"
+          100% {
+            transform: scale(1);
+          }
+        }
+
+        .radionyx-hero-image {
+          animation: radionyx-hero-zoom 18s ease-in-out infinite;
+          transform-origin: center center;
+          will-change: transform;
+        }
+
+        /* ---------------------------------------------
+           SHOOTING STARS
+        --------------------------------------------- */
+
+        @keyframes radionyx-shoot {
+          0% {
+            opacity: 0;
+            transform: translate3d(-30px, 30px, 0) rotate(-28deg);
+          }
+
+          8% {
+            opacity: 0.45;
+          }
+
+          18% {
+            opacity: 0;
+            transform: translate3d(75px, -75px, 0) rotate(-28deg);
+          }
+
+          100% {
+            opacity: 0;
+            transform: translate3d(75px, -75px, 0) rotate(-28deg);
+          }
+        }
+
+        .shooting-star {
+          opacity: 0;
+          transform-origin: right center;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(241, 241, 236, 0.16)
+          );
+          animation-name: radionyx-shoot;
+          animation-timing-function: ease-out;
+          animation-iteration-count: infinite;
+          transform: rotate(-28deg);
+        }
+
+        .shooting-star > span {
+          background: rgba(241, 241, 236, 0.28);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .shooting-star {
+            animation: none;
+            display: none;
+          }
+
+          .radionyx-hero-image {
+            animation: none;
+          }
+        }
+      `}</style>
+
+      {/* ============================================================
+          HERO
+      ============================================================ */}
+
+      <section
+        className="relative h-[610px] overflow-hidden bg-ink lg:h-[680px]"
+        aria-labelledby="home-title"
+      >
+        {/* Animated hero image */}
+
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src="/images/hero-mapping.webp"
+            alt="GIS and geospatial mapping imagery"
+            className="radionyx-hero-image absolute inset-0 h-full w-full object-cover"
+            fetchPriority="high"
+            decoding="async"
           />
-          <path
-            d="M15 266C78 185 128 240 184 169C226 115 278 130 325 78C369 30 423 82 505 34"
-            stroke="currentColor"
-            strokeWidth="1"
-          />
-          <path
-            d="M0 298C66 212 121 270 192 192C236 143 288 156 339 98C384 47 438 99 520 48"
-            stroke="currentColor"
-            strokeWidth="1"
-          />
-        </svg>
+        </div>
 
-        {/* Large grey capsule */}
+        {/* Dark overlay */}
+
+        <div className="absolute inset-0 bg-ink/60" />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-ink/20" />
+
+        {/* Shooting stars */}
+
+        <ShootingStars />
+
+        {/* Dot field */}
+
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute right-[7%] top-[19%] h-16 w-64 rotate-[-28deg] border border-white/20 bg-white/[0.035]"
+          className="pointer-events-none absolute inset-0 z-[3] opacity-30"
         >
           <div
             className="absolute inset-0"
             style={{
               backgroundImage:
-                "repeating-linear-gradient(135deg, transparent 0, transparent 10px, rgba(255,255,255,0.18) 11px, transparent 12px)",
+                "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.25) 1px, transparent 0)",
+              backgroundSize: "28px 28px",
             }}
           />
         </div>
 
-        {/* Long diagonal accent bar */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-[-100px] top-[47%] h-[18px] w-[560px] rotate-[-27deg] bg-white/[0.12]"
-        />
+        {/* HERO CONTENT — CENTERED */}
 
-        {/* Smaller diagonal bar */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-[17%] top-[65%] h-[8px] w-48 rotate-[-27deg] bg-white/[0.24]"
-        />
+        <div className="relative z-10 mx-auto flex h-full max-w-[1320px] items-center justify-center px-6 text-center lg:px-10">
+          <div className="flex max-w-[950px] flex-col items-center">
+            <Reveal>
+              <h1
+                id="home-title"
+                className="font-display max-w-[900px] text-[44px] font-semibold leading-[1.03] tracking-[-0.035em] text-paper sm:text-[58px] lg:text-[76px]"
+              >
+                GIS Services in Zimbabwe
+              </h1>
+            </Reveal>
 
-        {/* Grey geometric block */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-[8%] right-[8%] h-32 w-32 rotate-45 border border-white/15"
-        >
-          <div className="absolute inset-5 border border-white/10" />
+            <Reveal delay={100}>
+              <p className="mt-7 max-w-[760px] text-xl leading-relaxed text-paper/80 sm:text-2xl lg:text-[27px] lg:leading-[1.4]">
+                The land always tells you something. We help you hear it.
+              </p>
+            </Reveal>
+
+            <Reveal delay={180}>
+              <p className="mt-6 max-w-[700px] text-base leading-7 text-paper/65 sm:text-lg">
+                Radionyx Geospatial Solutions provides GIS, remote sensing,
+                mapping and spatial analysis services, turning geographic
+                data into information you can understand and act on.
+              </p>
+            </Reveal>
+
+            <Reveal delay={260}>
+              <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+                <Link
+                  to="/services"
+                  className="group inline-flex items-center gap-2 bg-accent px-6 py-3.5 text-sm font-semibold text-paper transition-colors hover:bg-paper hover:text-ink"
+                >
+                  Explore our services
+
+                  <ArrowRight
+                    size={16}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
+                </Link>
+
+                <Link
+                  to="/contact"
+                  hash="project"
+                  className="group inline-flex items-center gap-2 border border-paper/35 px-6 py-3.5 text-sm font-semibold text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+                >
+                  Request a demo
+
+                  <ArrowUpRight
+                    size={15}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
+                </Link>
+              </div>
+            </Reveal>
+          </div>
         </div>
 
-        {/* Left capsule */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-[16%] left-[-70px] h-12 w-72 rotate-[-25deg] border border-white/10 bg-white/[0.025]"
-        />
+        {/* Scroll indicator */}
 
-        {/* Green micro accent */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-[18%] left-[11%] h-2 w-20 rotate-[-25deg] bg-accent/70"
-        />
+        <a
+          href="#services"
+          aria-label="Scroll to services"
+          className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 text-paper/40 transition-colors hover:text-paper sm:flex"
+        >
+          <span className="text-[10px] uppercase tracking-[0.18em]">
+            Explore
+          </span>
 
-        {/* Corner geometry */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute left-[7%] top-[17%] h-24 w-24 border-l border-t border-white/15"
-        />
+          <ChevronDown size={16} />
+        </a>
+      </section>
 
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-[10%] left-[7%] h-16 w-16 border-b border-l border-white/10"
-        />
+      {/* ============================================================
+          SERVICES
+      ============================================================ */}
 
-        {/* Hero content */}
-        <div className="relative z-10 mx-auto flex min-h-[620px] max-w-[1320px] items-end px-6 pb-20 pt-36 lg:px-10 lg:pb-24">
-          <div className="max-w-4xl">
-            <h1 className="font-display max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl lg:text-[78px]">
-              Let&apos;s talk about
-              <br />
-              the spatial problem.
-            </h1>
+      <section
+        id="services"
+        aria-labelledby="services-heading"
+        className="border-b border-ink/10 bg-paper"
+      >
+        <div className="mx-auto max-w-[1320px] px-6 py-20 lg:px-10 lg:py-24">
+          <Reveal className="mb-14 grid gap-8 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-8">
+              <h2
+                id="services-heading"
+                className="font-display max-w-3xl text-4xl font-semibold leading-tight tracking-[-0.025em] sm:text-5xl"
+              >
+                Geospatial services built around real questions.
+              </h2>
 
-            <p className="mt-8 max-w-2xl text-base leading-8 text-paper/60 sm:text-lg">
-              Tell us what you are trying to understand, map, measure or
-              monitor. Radionyx provides GIS, remote sensing, mapping and
-              spatial analysis services for projects across Zimbabwe and
-              Southern Africa.
-            </p>
-
-            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm text-paper/50">
-              
+              <p className="mt-5 max-w-2xl text-base leading-7 text-ink/65 sm:text-lg">
+                We work with geographic data to help organisations understand
+                land, water, agriculture, infrastructure, environment and
+                development across Zimbabwe.
+              </p>
             </div>
+
+            <div className="lg:col-span-4 lg:flex lg:justify-end">
+              <Link
+                to="/services"
+                className="group inline-flex items-center gap-2 border-b border-ink/20 pb-1 text-sm font-semibold text-ink/70 transition-colors hover:border-ink/60 hover:text-ink"
+              >
+                View all {services.length} services
+
+                <ArrowUpRight
+                  size={15}
+                  className="transition-transform group-hover:translate-x-0.5"
+                />
+              </Link>
+            </div>
+          </Reveal>
+
+          <div className="border-t border-ink/15">
+            {services.map((service, index) => (
+              <Reveal key={service.id} delay={index * 60}>
+                <Link
+                  to="/services/$slug"
+                  params={{ slug: service.slug }}
+                  className="group grid gap-4 border-b border-ink/10 py-7 transition-colors hover:bg-ink/[0.025] sm:grid-cols-12 sm:gap-8 sm:px-3"
+                >
+                  <div className="sm:col-span-1">
+                    <span className="text-sm font-semibold text-ink/35">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  <div className="sm:col-span-4">
+                    <h3 className="text-xl font-semibold tracking-tight text-ink transition-transform group-hover:translate-x-1">
+                      {service.title}
+                    </h3>
+                  </div>
+
+                  <div className="sm:col-span-6">
+                    <p className="max-w-2xl leading-7 text-ink/65">
+                      {service.deck}
+                    </p>
+                  </div>
+
+                  <div className="hidden items-center justify-end sm:col-span-1 sm:flex">
+                    <ArrowUpRight
+                      size={18}
+                      className="text-ink/30 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink"
+                    />
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CONTACT + FORM */}
-      <section className="mx-auto max-w-[1320px] px-6 py-20 lg:px-10 lg:py-28">
-        <div className="grid gap-20 lg:grid-cols-[0.72fr_1.28fr]">
-          {/* CONTACT DETAILS */}
-          <div>
-            <h2 className="font-display max-w-md text-4xl font-semibold leading-tight tracking-[-0.04em] sm:text-5xl">
-              Tell us what you need.
+      {/* ============================================================
+          ABOUT / ZIMBABWE
+      ============================================================ */}
+
+      <section
+        aria-labelledby="zimbabwe-heading"
+        className="border-b border-ink/10 bg-paper-2"
+      >
+        <div className="mx-auto max-w-[1320px] px-6 py-20 lg:px-10 lg:py-28">
+          <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
+            <Reveal className="lg:col-span-6">
+              <div className="border border-ink/15 bg-paper p-3">
+                <MonoImage
+                  src="/images/services/zimbabwe-cartography.webp"
+                  alt="Cartographic map showing the geographic context for GIS and mapping services"
+                  className="h-auto w-full object-contain"
+                />
+              </div>
+            </Reveal>
+
+            <Reveal delay={100} className="lg:col-span-6">
+              <h2
+                id="zimbabwe-heading"
+                className="font-display max-w-2xl text-4xl font-semibold leading-[1.12] tracking-[-0.025em] sm:text-5xl"
+              >
+                We work with the places we know.
+              </h2>
+
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-ink/75">
+                Every geospatial project starts with a question about a real
+                place — a wetland changing over time, land being converted,
+                infrastructure that needs to be mapped, or a landscape that
+                needs to be understood.
+              </p>
+
+              <p className="mt-5 max-w-2xl leading-7 text-ink/60">
+                Our work combines geographic data, satellite imagery, spatial
+                analysis and cartography to turn complex geographic
+                information into something useful for decision making.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-6">
+                <Link
+                  to="/gis-zimbabwe"
+                  className="group inline-flex items-center gap-2 border-b border-ink/20 pb-1 text-sm font-semibold text-ink/70 transition-colors hover:border-ink/60 hover:text-ink"
+                >
+                  GIS in Zimbabwe
+                  <ArrowUpRight size={15} />
+                </Link>
+
+                <Link
+                  to="/about"
+                  className="group inline-flex items-center gap-2 border-b border-ink/20 pb-1 text-sm font-semibold text-ink/70 transition-colors hover:border-ink/60 hover:text-ink"
+                >
+                  About Radionyx
+                  <ArrowUpRight size={15} />
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          PROCESS
+      ============================================================ */}
+
+      <section aria-labelledby="process-heading" className="bg-ink">
+        <div className="mx-auto max-w-[1320px] px-6 py-20 lg:px-10 lg:py-24">
+          <Reveal className="mb-16 max-w-3xl">
+            <h2
+              id="process-heading"
+              className="font-display text-4xl font-semibold tracking-[-0.025em] text-paper sm:text-5xl"
+            >
+              From question to answer.
             </h2>
 
-            <p className="mt-6 max-w-md text-base leading-8 text-ink/60">
-              Whether you need a map, spatial analysis, satellite imagery
-              assessment, environmental study or a complete geospatial
-              workflow, start by telling us about the problem.
+            <p className="mt-5 max-w-2xl text-base leading-7 text-paper/55 sm:text-lg">
+              A practical workflow that moves from understanding the problem
+              to analysing geographic information and producing useful
+              results.
+            </p>
+          </Reveal>
+
+          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+            {process.map((step, index) => (
+              <Reveal key={step.n} delay={index * 80}>
+                <div className="border-t border-paper/15 pt-5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-paper/35">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+
+                    <span className="text-xs text-paper/30">
+                      {step.n}
+                    </span>
+                  </div>
+
+                  <h3 className="mt-8 text-xl font-semibold text-paper">
+                    {step.title}
+                  </h3>
+
+                  <p className="mt-3 text-base leading-7 text-paper/55">
+                    {step.description}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          TECHNOLOGY
+      ============================================================ */}
+
+      <section
+        aria-labelledby="technology-heading"
+        className="border-b border-ink/10 bg-paper"
+      >
+        <div className="mx-auto grid max-w-[1320px] gap-12 px-6 py-20 lg:grid-cols-12 lg:items-center lg:px-10 lg:py-28">
+          <Reveal className="lg:col-span-8">
+            <h2
+              id="technology-heading"
+              className="font-display max-w-3xl text-4xl font-semibold leading-[1.12] tracking-[-0.025em] sm:text-5xl"
+            >
+              The right tools for the work.
+            </h2>
+
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-ink/75">
+              Our workflows combine established GIS software, satellite
+              imagery, remote sensing, spatial analysis and web mapping
+              technologies.
             </p>
 
-            <div className="mt-12 border-t border-ink/10">
-              <a
-                href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}
-                className="group flex items-start gap-5 border-b border-ink/10 py-6"
-              >
-                <Phone
-                  size={19}
-                  strokeWidth={1.5}
-                  className="mt-1 shrink-0 text-ink/50 transition-colors group-hover:text-accent"
-                />
+            <p className="mt-5 max-w-2xl leading-7 text-ink/60">
+              Depending on the project, this can include ArcGIS Pro, QGIS,
+              Global Mapper, Google Earth Engine, Sentinel-2, Landsat, Python,
+              GeoPandas, Rasterio, GDAL and PostGIS.
+            </p>
 
-                <div>
-                  <p className="text-sm font-medium">Phone</p>
-                  <p className="mt-1 text-sm text-ink/55 transition-colors group-hover:text-ink">
-                    {contactInfo.phone}
-                  </p>
+            <Link
+              to="/technology"
+              className="group mt-8 inline-flex items-center gap-2 border-b border-ink/20 pb-1 text-sm font-semibold text-ink/70 transition-colors hover:border-ink/60 hover:text-ink"
+            >
+              Explore our technology
+
+              <ArrowUpRight size={15} />
+            </Link>
+          </Reveal>
+
+          <Reveal
+            delay={120}
+            className="lg:col-span-4 lg:flex lg:justify-end"
+          >
+            <div className="relative w-full max-w-[330px] border border-ink/15 p-8">
+              {/* Green bullet removed */}
+
+              <p className="font-mono text-xs uppercase tracking-[0.15em] text-ink/35">
+                Geospatial stack
+              </p>
+
+              <div className="mt-8 space-y-3 text-sm text-ink/70">
+                <div className="border-t border-ink/10 pt-3">
+                  GIS & Mapping
                 </div>
-              </a>
 
-              <a
-                href={`mailto:${contactInfo.email}`}
-                className="group flex items-start gap-5 border-b border-ink/10 py-6"
-              >
-                <Mail
-                  size={19}
-                  strokeWidth={1.5}
-                  className="mt-1 shrink-0 text-ink/50 transition-colors group-hover:text-accent"
-                />
-
-                <div>
-                  <p className="text-sm font-medium">Email</p>
-                  <p className="mt-1 text-sm text-ink/55 transition-colors group-hover:text-ink">
-                    {contactInfo.email}
-                  </p>
+                <div className="border-t border-ink/10 pt-3">
+                  Remote Sensing
                 </div>
-              </a>
 
-              <div className="flex items-start gap-5 border-b border-ink/10 py-6">
-                <MapPin
-                  size={19}
-                  strokeWidth={1.5}
-                  className="mt-1 shrink-0 text-ink/50"
-                />
-
-                <div>
-                  <p className="text-sm font-medium">Office</p>
-                  <p className="mt-1 max-w-xs text-sm leading-6 text-ink/55">
-                    {contactInfo.address}
-                  </p>
+                <div className="border-t border-ink/10 pt-3">
+                  Spatial Analysis
                 </div>
-              </div>
 
-              <div className="flex items-start gap-5 border-b border-ink/10 py-6">
-                <Clock3
-                  size={19}
-                  strokeWidth={1.5}
-                  className="mt-1 shrink-0 text-ink/50"
-                />
+                <div className="border-t border-ink/10 pt-3">
+                  Web GIS
+                </div>
 
-                <div>
-                  <p className="text-sm font-medium">Office hours</p>
-                  <p className="mt-1 text-sm text-ink/55">
-                    {contactInfo.hours}
-                  </p>
+                <div className="border-t border-ink/10 pt-3">
+                  Spatial Databases
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
+        </div>
+      </section>
 
-          {/* FORM */}
-          <div className="border-t border-ink/15 pt-8">
-            {submitted ? (
-              <div className="flex min-h-[420px] flex-col justify-center border-y border-ink/10 py-16">
-                <div className="mb-7 flex h-12 w-12 items-center justify-center border border-accent">
-                  <Check size={22} className="text-accent" />
-                </div>
+      {/* ============================================================
+          SHOWCASE / PROJECTS
+      ============================================================ */}
 
-                <h2 className="font-display text-3xl font-semibold tracking-tight">
-                  Your enquiry is ready.
-                </h2>
+      <section
+        aria-labelledby="projects-heading"
+        className="bg-paper-2"
+      >
+        <div className="mx-auto max-w-[1320px] px-6 py-20 lg:px-10 lg:py-28">
+          <Reveal className="mb-14">
+            <h2
+              id="projects-heading"
+              className="font-display max-w-3xl text-4xl font-semibold leading-tight tracking-[-0.025em] sm:text-5xl"
+            >
+              What we can do with geospatial data.
+            </h2>
 
-                <p className="mt-4 max-w-lg leading-7 text-ink/60">
-                  Thank you for getting in touch with Radionyx. We&apos;ll
-                  review the information you provided and get back to you.
-                </p>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-ink/60 sm:text-lg">
+              Explore examples of the kinds of mapping, spatial analysis,
+              remote sensing and environmental work Radionyx can deliver.
+            </p>
+          </Reveal>
 
-                <button
-                  type="button"
-                  onClick={() => setSubmitted(false)}
-                  className="mt-8 w-fit text-sm font-semibold underline decoration-ink/20 underline-offset-4 transition-colors hover:text-accent"
-                >
-                  Submit another enquiry
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-9">
-                <div className="grid gap-8 sm:grid-cols-2">
-                  <label className="block">
-                    <span className="text-sm font-medium">Name *</span>
-                    <input
-                      required
-                      name="name"
-                      type="text"
-                      autoComplete="name"
-                      className="mt-3 block w-full border-0 border-b border-ink/20 bg-transparent px-0 py-3 text-base outline-none transition-colors placeholder:text-ink/30 focus:border-accent"
-                      placeholder="Your name"
+          <div className="grid gap-10 md:grid-cols-3">
+            {projects.map((project, index) => (
+              <Reveal
+                key={project.slug}
+                delay={index * 90}
+                className="group"
+              >
+                <div className="mb-6 overflow-hidden border border-ink/15 bg-paper p-2">
+                  <div className="overflow-hidden">
+                    <MonoImage
+                      src={project.image}
+                      alt={project.title}
+                      className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                     />
-                  </label>
-
-                  <label className="block">
-                    <span className="text-sm font-medium">Email *</span>
-                    <input
-                      required
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      className="mt-3 block w-full border-0 border-b border-ink/20 bg-transparent px-0 py-3 text-base outline-none transition-colors placeholder:text-ink/30 focus:border-accent"
-                      placeholder="you@example.com"
-                    />
-                  </label>
-                </div>
-
-                <div className="grid gap-8 sm:grid-cols-2">
-                  <label className="block">
-                    <span className="text-sm font-medium">Organisation</span>
-                    <input
-                      name="organisation"
-                      type="text"
-                      autoComplete="organization"
-                      className="mt-3 block w-full border-0 border-b border-ink/20 bg-transparent px-0 py-3 text-base outline-none transition-colors placeholder:text-ink/30 focus:border-accent"
-                      placeholder="Company or organisation"
-                    />
-                  </label>
-
-                  <label className="block">
-                    <span className="text-sm font-medium">Phone</span>
-                    <input
-                      name="phone"
-                      type="tel"
-                      autoComplete="tel"
-                      className="mt-3 block w-full border-0 border-b border-ink/20 bg-transparent px-0 py-3 text-base outline-none transition-colors placeholder:text-ink/30 focus:border-accent"
-                      placeholder="+263..."
-                    />
-                  </label>
-                </div>
-
-                <label className="block">
-                  <span className="text-sm font-medium">What can we help with? *</span>
-
-                  <textarea
-                    required
-                    name="message"
-                    rows={6}
-                    className="mt-3 block w-full resize-none border border-ink/15 bg-transparent p-4 text-base outline-none transition-colors placeholder:text-ink/30 focus:border-accent"
-                    placeholder="Describe the project, location, data you have and what you need to understand or produce."
-                  />
-                </label>
-
-                <div>
-                  <p className="text-sm font-medium">
-                    Services you are interested in
-                  </p>
-
-                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                    {services.map((service) => (
-                      <label
-                        key={service}
-                        className="flex cursor-pointer items-center gap-3 border-b border-ink/10 py-3 text-sm text-ink/65 transition-colors hover:text-ink"
-                      >
-                        <input
-                          type="checkbox"
-                          name="services"
-                          value={service}
-                          className="h-4 w-4 accent-accent"
-                        />
-                        <span>{service}</span>
-                      </label>
-                    ))}
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-5 border-t border-ink/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="max-w-md text-xs leading-5 text-ink/45">
-                    Please provide enough information for us to understand the
-                    nature and location of your project.
-                  </p>
+                {/* Location removed */}
 
-                  <button
-                    type="submit"
-                    className="group inline-flex shrink-0 items-center justify-center gap-3 bg-ink px-7 py-4 text-sm font-semibold text-paper transition-colors hover:bg-accent hover:text-ink"
-                  >
-                    Send enquiry
-                    <ArrowRight
-                      size={17}
-                      className="transition-transform duration-200 group-hover:translate-x-1"
-                    />
-                  </button>
-                </div>
-              </form>
-            )}
+                <h3 className="text-xl font-semibold tracking-tight text-ink">
+                  {project.title}
+                </h3>
+
+                <p className="mt-3 leading-7 text-ink/65">
+                  {project.description}
+                </p>
+
+                {/* See work replaced with Request a demo */}
+
+                <Link
+                  to="/contact"
+                  hash="project"
+                  className="group mt-5 inline-flex items-center gap-2 border-b border-ink/20 pb-1 text-sm font-semibold text-ink/70 transition-colors hover:border-ink/60 hover:text-ink"
+                >
+                  Request a demo
+
+                  <ArrowUpRight
+                    size={15}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* MAP */}
-      <section className="border-t border-ink/10 bg-[#e9e9e3]">
-        <div className="mx-auto max-w-[1320px] px-6 py-20 lg:px-10 lg:py-24">
-          <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:items-end">
-            <div>
-              <h2 className="font-display text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
-                Find our office.
-              </h2>
+      {/* ============================================================
+          FAQ
+      ============================================================ */}
 
-              <p className="mt-5 max-w-md text-base leading-7 text-ink/60">
-                Radionyx Geospatial Solutions is based in Bulawayo, Zimbabwe.
-                Use the map to locate our office or open the location directly
-                in OpenStreetMap.
-              </p>
-
-              <div className="mt-7 flex items-start gap-4">
-                <MapPin size={19} strokeWidth={1.5} className="mt-1" />
-
-                <p className="max-w-xs text-sm leading-6 text-ink/65">
-                  {contactInfo.address}
-                </p>
-              </div>
-
-              <a
-                href={mapUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold"
-              >
-                Open in OpenStreetMap
-                <ArrowRight
-                  size={16}
-                  className="transition-transform group-hover:translate-x-1"
-                />
-              </a>
-            </div>
-
-            <div className="relative min-h-[460px] overflow-hidden border border-ink/10 bg-white">
-              <iframe
-                title="Radionyx Geospatial Solutions office location in Bulawayo, Zimbabwe"
-                src={mapEmbedUrl}
-                className="absolute inset-0 h-full w-full border-0"
-                loading="lazy"
-              />
-
-              {/* Coordinate marker information */}
-              <div className="absolute bottom-4 left-4 border border-ink/10 bg-paper/95 px-4 py-3 backdrop-blur-sm">
-                <p className="text-xs font-medium">
-                  Radionyx Geospatial Solutions
-                </p>
-                <p className="mt-1 font-mono text-[10px] text-ink/45">
-                  {latitude.toFixed(6)}, {longitude.toFixed(6)}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SERVICES */}
-      <section className="border-t border-ink/10 bg-paper">
-        <div className="mx-auto max-w-[1320px] px-6 py-20 lg:px-10 lg:py-24">
-          <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
-            <div>
-              <h2 className="font-display max-w-md text-4xl font-semibold leading-tight tracking-[-0.04em] sm:text-5xl">
-                Not sure which service you need?
-              </h2>
-
-              <p className="mt-5 max-w-md leading-7 text-ink/60">
-                That is fine. You can describe the problem rather than
-                choosing a technical service. We can help identify the most
-                appropriate spatial workflow.
-              </p>
-            </div>
-
-            <div className="border-t border-ink/10">
-              <Link
-                to="/services"
-                className="group flex items-center justify-between border-b border-ink/10 py-7"
-              >
-                <div>
-                  <h3 className="font-display text-2xl font-semibold tracking-tight">
-                    Explore our GIS services
-                  </h3>
-                  <p className="mt-2 text-sm text-ink/50">
-                    GIS, remote sensing, mapping, spatial analysis and
-                    geospatial data solutions.
-                  </p>
-                </div>
-
-                <ArrowRight
-                  size={20}
-                  className="ml-6 shrink-0 transition-transform duration-200 group-hover:translate-x-1"
-                />
-              </Link>
-
-              <Link
-                to="/projects"
-                className="group flex items-center justify-between border-b border-ink/10 py-7"
-              >
-                <div>
-                  <h3 className="font-display text-2xl font-semibold tracking-tight">
-                    See our projects
-                  </h3>
-                  <p className="mt-2 text-sm text-ink/50">
-                    Examples of spatial analysis, environmental mapping and
-                    remote-sensing work.
-                  </p>
-                </div>
-
-                <ArrowRight
-                  size={20}
-                  className="ml-6 shrink-0 transition-transform duration-200 group-hover:translate-x-1"
-                />
-              </Link>
-
-              <Link
-                to="/about"
-                className="group flex items-center justify-between py-7"
-              >
-                <div>
-                  <h3 className="font-display text-2xl font-semibold tracking-tight">
-                    Learn about Radionyx
-                  </h3>
-                  <p className="mt-2 text-sm text-ink/50">
-                    Our approach to geospatial data, geographic analysis and
-                    decision support.
-                  </p>
-                </div>
-
-                <ArrowRight
-                  size={20}
-                  className="ml-6 shrink-0 transition-transform duration-200 group-hover:translate-x-1"
-                />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="bg-ink px-6 py-20 text-paper lg:px-10 lg:py-24">
-        <div className="mx-auto flex max-w-[1320px] flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <h2 className="font-display max-w-3xl text-4xl font-semibold leading-tight tracking-[-0.045em] sm:text-5xl lg:text-6xl">
-              Have a spatial problem?
+      <section aria-labelledby="faq-heading" className="bg-paper">
+        <div className="mx-auto max-w-[900px] px-6 py-20 lg:py-28">
+          <Reveal className="mb-12">
+            <h2
+              id="faq-heading"
+              className="font-display text-4xl font-semibold tracking-[-0.025em] sm:text-5xl"
+            >
+              Common questions.
             </h2>
 
-            <p className="mt-5 max-w-xl leading-7 text-paper/55">
-              Start with the problem. We&apos;ll help turn it into a
-              practical geospatial workflow.
+            <p className="mt-5 max-w-2xl text-base leading-7 text-ink/60 sm:text-lg">
+              Answers to common questions about GIS services, mapping,
+              geospatial analysis and working with Radionyx.
             </p>
-          </div>
+          </Reveal>
 
-          <a
-            href={`mailto:${contactInfo.email}`}
-            className="group inline-flex items-center gap-3 text-base font-semibold text-paper"
-          >
-            {contactInfo.email}
-            <ArrowRight
-              size={18}
-              className="transition-transform duration-200 group-hover:translate-x-1"
-            />
-          </a>
+          <div className="border-t border-ink/15">
+            {faqs.map((faq) => (
+              <details
+                key={faq.question}
+                className="group border-b border-ink/15 py-6"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-8">
+                  <span className="text-base font-semibold text-ink sm:text-lg">
+                    {faq.question}
+                  </span>
+
+                  <span
+                    aria-hidden="true"
+                    className="flex h-7 w-7 shrink-0 items-center justify-center border border-ink/20 text-ink/50 transition-colors group-open:border-accent group-open:bg-accent group-open:text-paper"
+                  >
+                    <Plus
+                      size={14}
+                      className="transition-transform duration-300 group-open:rotate-45"
+                    />
+                  </span>
+                </summary>
+
+                <p className="mt-4 max-w-3xl pr-10 text-base leading-7 text-ink/65 sm:text-lg">
+                  {faq.answer}
+                </p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
-    </main>
+
+      {/* ============================================================
+          FINAL CTA
+      ============================================================ */}
+
+      <section aria-labelledby="cta-heading" className="bg-ink">
+        <div className="mx-auto max-w-[1320px] px-6 py-20 lg:px-10 lg:py-28">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
+            <Reveal className="lg:col-span-8">
+              <h2
+                id="cta-heading"
+                className="font-display max-w-4xl text-4xl font-semibold leading-[1.08] tracking-[-0.025em] text-paper sm:text-5xl lg:text-[56px]"
+              >
+                Have a geographic question?
+              </h2>
+
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-paper/55 lg:text-xl">
+                Tell us what you are trying to understand. We can help you
+                determine what geographic data, analysis or mapping approach
+                will get you there.
+              </p>
+            </Reveal>
+
+            <Reveal
+              delay={120}
+              className="lg:col-span-4 lg:flex lg:justify-end"
+            >
+              <div>
+                <p className="mb-5 text-sm text-paper/40">
+                  {contactInfo.email}
+                </p>
+
+                <Link
+                  to="/contact"
+                  hash="project"
+                  className="group inline-flex items-center gap-2 bg-accent px-6 py-3.5 text-sm font-semibold text-paper transition-colors hover:bg-paper hover:text-ink"
+                >
+                  Discuss your project
+
+                  <ArrowRight
+                    size={17}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
-
-

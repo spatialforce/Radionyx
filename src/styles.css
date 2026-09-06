@@ -7,9 +7,10 @@
   --color-accent: #2dbb6f;
   --color-accent-dark: #239a5a;
   --color-muted: #6e6e66;
-  --color-cream: #ecece4;
-  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  
+    --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
